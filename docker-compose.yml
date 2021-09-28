@@ -15,6 +15,12 @@ services:
       --ipcdisable
       --networkid=${NETWORK_ID}
       --netrestrict="172.16.254.0/28"
+      --metrics 
+      --metrics.expensive
+      --metrics.influxdb 
+      --metrics.influxdb.endpoint "http://10.10.24.30:8086" 
+      --metrics.influxdb.username "geth" 
+      --metrics.influxdb.password "chosenpassword"
     networks:
       priv-eth-net:
 
@@ -34,6 +40,12 @@ services:
       --http.corsdomain="*"
       --networkid=${NETWORK_ID}
       --netrestrict="172.16.254.0/28"
+      --metrics
+      --metrics.expensive      
+      --metrics.influxdb 
+      --metrics.influxdb.endpoint "http://10.10.24.30:8086" 
+      --metrics.influxdb.username "geth" 
+      --metrics.influxdb.password "chosenpassword"
     ports:
       - "8545:8545"
     networks:
@@ -52,8 +64,14 @@ services:
       --miner.threads=1
       --networkid=${NETWORK_ID}
       --netrestrict="172.16.254.0/28"
+      --metrics
+      --metrics.expensive
+      --metrics.influxdb 
+      --metrics.influxdb.endpoint "http://10.10.24.30:8086" 
+      --metrics.influxdb.username "geth" 
+      --metrics.influxdb.password "chosenpassword"
     networks:
-      priv-eth-net:
+      priv-eth-net:  
   eth_explorer:
     hostname: alethio_expl
     environment:
@@ -62,7 +80,7 @@ services:
     ports:
       - "8081:80"
     networks:
-      priv-eth-net:      
+      priv-eth-net:            
 networks:
   priv-eth-net:
     driver: bridge
