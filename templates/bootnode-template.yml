@@ -1,0 +1,22 @@
+geth-bootnode:
+    container_name: geth-bootnode
+    env_file:
+      - .env
+    image: geth-client
+    build:
+      context: .
+      args:
+        - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD}
+    command:
+      --nodekeyhex="b0ac22adcad37213c7c565810a50f1772291e7b0ce53fb73e7ec2a3c75bc13b5"
+      --nodiscover
+      --ipcdisable
+      --networkid=${NETWORK_ID}
+      --metrics 
+      --metrics.expensive
+      --metrics.influxdb 
+      --metrics.influxdb.endpoint ${INFLUX_DB_HOST} 
+      --metrics.influxdb.username ${INFLUX_USER} 
+      --metrics.influxdb.password ${INFLUX_PASS}
+    networks:
+      - geth-testnet

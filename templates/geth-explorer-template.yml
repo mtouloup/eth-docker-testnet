@@ -1,0 +1,9 @@
+eth_explorer:
+    container_name: eth-explorer
+    environment:
+      - APP_NODE_URL=${APP_NODE_URL}
+    image: alethio/ethereum-lite-explorer
+    ports:
+      - "8081:80"
+    networks:
+      - geth-testnet

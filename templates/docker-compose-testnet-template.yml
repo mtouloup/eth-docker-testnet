@@ -1,0 +1,64 @@
+version: "3.5"
+
+networks:
+  eth_private_testnet:
+    name: ${TESTNET_NAME:-eth_private_testnet}
+    external: true
+
+services:
+  geth-bootnode:
+      container_name: geth-bootnode
+      env_file:
+        - .env
+      image: geth-client
+      build:
+        context: .
+        args:
+          - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD}
+      command:
+        --nodekeyhex="b0ac22adcad37213c7c565810a50f1772291e7b0ce53fb73e7ec2a3c75bc13b5"
+        --nodiscover
+        --ipcdisable
+        --networkid=${NETWORK_ID}
+        --metrics 
+        --metrics.expensive
+        --metrics.influxdb 
+        --metrics.influxdb.endpoint ${INFLUX_DB_HOST} 
+        --metrics.influxdb.username ${INFLUX_USER} 
+        --metrics.influxdb.password ${INFLUX_PASS}
+      networks:
+        - eth_private_testnet
+  eth_explorer:
+      container_name: eth-explorer
+      environment:
+        - APP_NODE_URL=${APP_NODE_URL}
+      image: alethio/ethereum-lite-explorer
+      ports:
+        - "8081:80"
+      networks:
+        - eth_private_testnet
+  geth-rpc-endpoint:
+    container_name: geth-rpc-endpoint
+    env_file:
+      - .env
+    image: geth-client
+    depends_on:
+      - geth-bootnode    
+    command:
+      --bootnodes="enode://af22c29c316ad069cf48a09a4ad5cf04a251b411e45098888d114c6dd7f489a13786620d5953738762afa13711d4ffb3b19aa5de772d8af72f851f7e9c5b164a@geth-bootnode:30303"
+      --allow-insecure-unlock
+      --http
+      --http.addr="0.0.0.0"
+      --http.api="eth,web3,net,admin,personal"
+      --http.corsdomain="*"
+      --networkid=${NETWORK_ID}
+      --metrics
+      --metrics.expensive      
+      --metrics.influxdb 
+      --metrics.influxdb.endpoint ${INFLUX_DB_HOST} 
+      --metrics.influxdb.username ${INFLUX_USER} 
+      --metrics.influxdb.password ${INFLUX_PASS}
+    ports:
+      - ${LOCAL_RPC_HTTP__PORT}:8545
+    networks:
+      - eth_private_testnet
