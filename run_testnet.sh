@@ -5,6 +5,7 @@ TEMPLATES_DIR=${TEMPLATES_DIR:-$(realpath ./templates/)}
 COMPOSE_FILENAME=${COMPOSE_FILENAME:-"docker-compose-testnet.yaml"}
 OUTPUT_DIR=${OUTPUT_DIR:-$(realpath ./configfiles)}
 VAL_NAME_PREFIX=${VAL_NAME_PREFIX:-"validator-"}
+TESTNET_NAME=${TESTNET_NAME:-"eth_private_testnet"}
 
 IMAGE_TAG=${IMAGE_TAG:-"latest"}
 
@@ -19,7 +20,7 @@ docker network create ${TESTNET_NAME}
 #run testnet
 echo "Starting the testnet..."
 
-TESTNET_NAME=${TESTNET_NAME} CONFIGFILES=${OUTPUT_DIR} IMAGE_TAG=${IMAGE_TAG} docker-compose -f ${WORKING_DIR}/${COMPOSE_FILENAME} up -d
+TESTNET_NAME=${TESTNET_NAME} IMAGE_TAG=${IMAGE_TAG} docker-compose -f ${WORKING_DIR}/${COMPOSE_FILENAME} up -d
 
 echo "Waiting for everything goes up..."
 sleep 10
