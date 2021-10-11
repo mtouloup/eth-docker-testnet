@@ -55,6 +55,11 @@ function generate_network_configs()
   nvals=$1
   echo "Generating network configuration for $nvals validators..."
   dockercompose_testnet_generator ${VAL_NUM} ${OUTPUT_DIR}
+  # create monitoring database
+  dbcmd="docker exec -it influxdb influx -execute 'CREATE DATABASE \"${INFLUX_DB_NAME}\"'"
+  eval $dbcmd
+  #dbcmd="\'CREATE DATABASE \"${INFLUX_DB_NAME}\";\'"
+  #docker exec -it influxdb influx -execute $dbcmd
   echo "  done!"
 }
 
