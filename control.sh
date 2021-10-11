@@ -3,6 +3,8 @@
 DEFAULT_ENVFILE="$(dirname $0)/.env"
 ENVFILE=${ENVFILE:-"$DEFAULT_ENVFILE"}
 
+source $ENVFILE
+
 WORKING_DIR=${WORKING_DIR:-$(realpath $(dirname $0))}
 TEMPLATES_DIR=${TEMPLATES_DIR:-$(realpath $(dirname $0)/templates/)}
 COMPOSE_FILENAME=${COMPOSE_FILENAME:-"docker-compose-testnet.yaml"}
@@ -16,7 +18,7 @@ IMAGE_TAG=${IMAGE_TAG:-"latest"}
 VAL_NUM=${1:-3}
 
 echo $TEMPLATES_DIR
-source $ENVFILE
+
 
 #source scripts/helper_functions.sh
 
@@ -63,7 +65,7 @@ function start_network()
   echo "Starting the testnet..."
   TESTNET_NAME=${TESTNET_NAME} IMAGE_TAG=${IMAGE_TAG}\
     WORKING_DIR=$WORKING_DIR \
-     docker-compose -f ${COMPOSE_FILE} up -d
+     docker-compose -f ${COMPOSE_FILE} --env-file $ENVFILE up -d
 
   echo "Waiting for everything goes up..."
 
@@ -77,7 +79,7 @@ function stop_network()
   
   CONFIGFILES=${OUTPUT_DIR} IMAGE_TAG=${IMAGE_TAG} \
         WORKING_DIR=$WORKING_DIR \
-      docker-compose -f ${COMPOSE_FILE} down
+      docker-compose -f ${COMPOSE_FILE} --env-file $ENVFILE down
   
   echo "  stopped!"
 }
@@ -87,7 +89,7 @@ function print_status()
   echo "Printing status of the  network..."
   CONFIGFILES=${OUTPUT_DIR} IMAGE_TAG=${IMAGE_TAG} TESTNET_NAME=$TESTNET_NAME \
       WORKING_DIR=$WORKING_DIR \
-     docker-compose -f ${COMPOSE_FILE} ps
+     docker-compose -f ${COMPOSE_FILE} --env-file $ENVFILE ps
   echo "  Finished!"
 }
 
