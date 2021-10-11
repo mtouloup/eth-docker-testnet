@@ -1,7 +1,7 @@
   geth-${VAL_NAME_PREFIX}${VAL_ID}:
     container_name: ${VAL_NAME_PREFIX}${VAL_ID}
     env_file:
-      - ${WORKING_DIR}/.env
+      - .env
     image: geth-client
     depends_on:
       - geth-bootnode

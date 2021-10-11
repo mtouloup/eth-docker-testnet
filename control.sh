@@ -60,7 +60,6 @@ function start_network()
 
   #run testnet
   echo "Starting the testnet..."
-
   TESTNET_NAME=${TESTNET_NAME} CONFIGFILES=${OUTPUT_DIR} IMAGE_TAG=${IMAGE_TAG}\
     WORKING_DIR=$WORKING_DIR \
      docker-compose -f ${COMPOSE_FILE} up -d
@@ -85,7 +84,6 @@ function stop_network()
 function print_status()
 {
   echo "Printing status of the  network..."
-  # TESTNET_NAME=$TESTNET_NAME docker-compose -f docker-compose-testnet.yml status
   CONFIGFILES=${OUTPUT_DIR} IMAGE_TAG=${IMAGE_TAG} TESTNET_NAME=$TESTNET_NAME \
       WORKING_DIR=$WORKING_DIR \
      docker-compose -f ${COMPOSE_FILE} ps
@@ -95,7 +93,6 @@ function print_status()
 function do_cleanup()
 {
   echo "Cleaning up network configuration..."
-  # rm -rf ${DEPLOYMENT_DIR}/*
   set -x
   rm -rf ${OUTPUT_DIR}/*
   rm ${COMPOSE_FILE}

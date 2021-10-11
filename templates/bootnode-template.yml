@@ -1,7 +1,7 @@
 geth-bootnode:
     container_name: geth-bootnode
     env_file:
-      - ${WORKING_DIR}/.env
+      - .env
     image: geth-client
     build:
       context: .
