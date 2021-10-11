@@ -16,6 +16,7 @@ IMAGE_TAG=${IMAGE_TAG:-"latest"}
 VAL_NUM=${1:-3}
 
 echo $TEMPLATES_DIR
+source $ENVFILE
 
 #source scripts/helper_functions.sh
 
