@@ -60,7 +60,7 @@ function start_network()
 
   #run testnet
   echo "Starting the testnet..."
-  TESTNET_NAME=${TESTNET_NAME} CONFIGFILES=${OUTPUT_DIR} IMAGE_TAG=${IMAGE_TAG}\
+  TESTNET_NAME=${TESTNET_NAME} IMAGE_TAG=${IMAGE_TAG}\
     WORKING_DIR=$WORKING_DIR \
      docker-compose -f ${COMPOSE_FILE} up -d
 

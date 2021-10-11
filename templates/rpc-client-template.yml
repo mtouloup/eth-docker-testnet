@@ -1,7 +1,7 @@
   geth-rpc-endpoint:
     container_name: geth-rpc-endpoint
     env_file:
-      - .env
+      - ${WORKING_DIR}/.env
     image: geth-client
     depends_on:
       - geth-bootnode    

@@ -29,7 +29,8 @@ function dockercompose_testnet_generator ()
 	num_of_validators=$1
 	configfiles_root_path=$2
 
-	cat ${TEMPLATES_DIR}/docker-compose-testnet-template.yml  > ${WORKING_DIR}/${COMPOSE_FILENAME}
+	sed -e  "s#\${WORKING_DIR}#$WORKING_DIR#g" \
+		${TEMPLATES_DIR}/docker-compose-testnet-template.yml  > ${WORKING_DIR}/${COMPOSE_FILENAME}
 
 	for (( i=0;i<${num_of_validators};i++ ))
 	do
