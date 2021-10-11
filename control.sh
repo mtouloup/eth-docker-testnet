@@ -4,9 +4,6 @@ DEFAULT_ENVFILE="$(dirname $0)/.env"
 ENVFILE=${ENVFILE:-"$DEFAULT_ENVFILE"}
 source $ENVFILE
 
-
-source $ENVFILE
-
 WORKING_DIR=${WORKING_DIR:-$(realpath $(dirname $0))}
 TEMPLATES_DIR=${TEMPLATES_DIR:-$(realpath $(dirname $0)/templates/)}
 COMPOSE_FILENAME=${COMPOSE_FILENAME:-"docker-compose-testnet.yaml"}
