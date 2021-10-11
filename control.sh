@@ -2,6 +2,8 @@
 
 DEFAULT_ENVFILE="$(dirname $0)/.env"
 ENVFILE=${ENVFILE:-"$DEFAULT_ENVFILE"}
+source $ENVFILE
+
 
 source $ENVFILE
 
