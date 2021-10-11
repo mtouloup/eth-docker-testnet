@@ -19,6 +19,7 @@ function validator_service()
 	sed -e "s/\${VAL_ID}/$valnum/g" \
             -e "s/\${VAL_NAME_PREFIX}/${VAL_NAME_PREFIX}/g" \
             -e "s#\${LOCAL_BESU_DEPLOY_PATH}#$val_deploy_path#g" \
+            -e "s#\${WORKING_DIR}#$WORKING_DIR#g" \
 		${TEMPLATES_DIR}/validator-template.yml | sed -e $'s/\\\\n/\\\n    /g'
 
 }

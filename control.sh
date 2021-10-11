@@ -3,19 +3,21 @@
 DEFAULT_ENVFILE="$(dirname $0)/.env"
 ENVFILE=${ENVFILE:-"$DEFAULT_ENVFILE"}
 
-WORKING_DIR=${WORKING_DIR:-$(realpath ./)}
-TEMPLATES_DIR=${TEMPLATES_DIR:-$(realpath ./templates/)}
+WORKING_DIR=${WORKING_DIR:-$(realpath $(dirname $0))}
+TEMPLATES_DIR=${TEMPLATES_DIR:-$(realpath $(dirname $0)/templates/)}
 COMPOSE_FILENAME=${COMPOSE_FILENAME:-"docker-compose-testnet.yaml"}
-OUTPUT_DIR=${OUTPUT_DIR:-$(realpath ./configfiles)}
+OUTPUT_DIR=${OUTPUT_DIR:-$(realpath $(dirname $0)/configfiles)}
 VAL_NAME_PREFIX=${VAL_NAME_PREFIX:-"validator-"}
 TESTNET_NAME=${TESTNET_NAME:-"eth_private_testnet"}
-COMPOSE_FILE=${WORKING_DIR}/docker-compose-testnet.yaml
+COMPOSE_FILE=${WORKING_DIR}/$COMPOSE_FILENAME
 
 IMAGE_TAG=${IMAGE_TAG:-"latest"}
 
 VAL_NUM=${1:-3}
 
-source scripts/helper_functions.sh
+echo $TEMPLATES_DIR
+
+#source scripts/helper_functions.sh
 
 ### Source scripts under scripts directory
 . $(dirname $0)/scripts/helper_functions.sh
@@ -59,7 +61,9 @@ function start_network()
   #run testnet
   echo "Starting the testnet..."
 
-  TESTNET_NAME=${TESTNET_NAME} CONFIGFILES=${OUTPUT_DIR} IMAGE_TAG=${IMAGE_TAG} docker-compose -f ${WORKING_DIR}/${COMPOSE_FILENAME} up -d
+  TESTNET_NAME=${TESTNET_NAME} CONFIGFILES=${OUTPUT_DIR} IMAGE_TAG=${IMAGE_TAG}\
+    WORKING_DIR=$WORKING_DIR \
+     docker-compose -f ${COMPOSE_FILE} up -d
 
   echo "Waiting for everything goes up..."
 
@@ -71,7 +75,9 @@ function stop_network()
 {
   echo "Stopping network..."
   
-  CONFIGFILES=${OUTPUT_DIR} IMAGE_TAG=${IMAGE_TAG} docker-compose -f ${COMPOSE_FILE} down
+  CONFIGFILES=${OUTPUT_DIR} IMAGE_TAG=${IMAGE_TAG} \
+        WORKING_DIR=$WORKING_DIR \
+      docker-compose -f ${COMPOSE_FILE} down
   
   echo "  stopped!"
 }
@@ -80,7 +86,9 @@ function print_status()
 {
   echo "Printing status of the  network..."
   # TESTNET_NAME=$TESTNET_NAME docker-compose -f docker-compose-testnet.yml status
-  CONFIGFILES=${OUTPUT_DIR} IMAGE_TAG=${IMAGE_TAG} TESTNET_NAME=$TESTNET_NAME docker-compose -f ${WORKING_DIR}/${COMPOSE_FILENAME} ps
+  CONFIGFILES=${OUTPUT_DIR} IMAGE_TAG=${IMAGE_TAG} TESTNET_NAME=$TESTNET_NAME \
+      WORKING_DIR=$WORKING_DIR \
+     docker-compose -f ${COMPOSE_FILE} ps
   echo "  Finished!"
 }
 
@@ -90,7 +98,7 @@ function do_cleanup()
   # rm -rf ${DEPLOYMENT_DIR}/*
   set -x
   rm -rf ${OUTPUT_DIR}/*
-  rm ${WORKING_DIR}/${COMPOSE_FILENAME}
+  rm ${COMPOSE_FILE}
   set +x
   echo "  clean up finished!"
 }
