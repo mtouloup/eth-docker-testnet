@@ -2,6 +2,8 @@
 
 DEFAULT_ENVFILE="$(dirname $0)/.env"
 ENVFILE=${ENVFILE:-"$DEFAULT_ENVFILE"}
+source $ENVFILE
+
 
 WORKING_DIR=${WORKING_DIR:-$(realpath $(dirname $0))}
 TEMPLATES_DIR=${TEMPLATES_DIR:-$(realpath $(dirname $0)/templates/)}
@@ -16,7 +18,7 @@ IMAGE_TAG=${IMAGE_TAG:-"latest"}
 VAL_NUM=${1:-3}
 
 echo $TEMPLATES_DIR
-source $ENVFILE
+
 
 #source scripts/helper_functions.sh
 
