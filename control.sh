@@ -65,7 +65,7 @@ function start_network()
   echo "Starting the testnet..."
   TESTNET_NAME=${TESTNET_NAME} IMAGE_TAG=${IMAGE_TAG}\
     WORKING_DIR=$WORKING_DIR \
-     docker-compose -f ${COMPOSE_FILE} --env-file $ENVFILE up -d
+     docker-compose --env-file $ENVFILE -f ${COMPOSE_FILE} up -d
 
   echo "Waiting for everything goes up..."
 
