@@ -23,6 +23,7 @@ services:
         --metrics 
         --metrics.expensive
         --metrics.influxdb 
+        --metrics.influxdb.database ${INFLUX_DB_NAME}
         --metrics.influxdb.endpoint ${INFLUX_DB_HOST} 
         --metrics.influxdb.username ${INFLUX_USER} 
         --metrics.influxdb.password ${INFLUX_PASS}
@@ -55,6 +56,7 @@ services:
       --metrics
       --metrics.expensive      
       --metrics.influxdb 
+      --metrics.influxdb.database ${INFLUX_DB_NAME}
       --metrics.influxdb.endpoint ${INFLUX_DB_HOST} 
       --metrics.influxdb.username ${INFLUX_USER} 
       --metrics.influxdb.password ${INFLUX_PASS}
@@ -77,6 +79,7 @@ services:
       --metrics
       --metrics.expensive
       --metrics.influxdb 
+      --metrics.influxdb.database ${INFLUX_DB_NAME}
       --metrics.influxdb.endpoint ${INFLUX_DB_HOST} 
       --metrics.influxdb.username ${INFLUX_USER} 
       --metrics.influxdb.password ${INFLUX_PASS}
@@ -97,6 +100,7 @@ services:
       --metrics
       --metrics.expensive
       --metrics.influxdb 
+      --metrics.influxdb.database ${INFLUX_DB_NAME}
       --metrics.influxdb.endpoint ${INFLUX_DB_HOST} 
       --metrics.influxdb.username ${INFLUX_USER} 
       --metrics.influxdb.password ${INFLUX_PASS}
@@ -117,6 +121,7 @@ services:
       --metrics
       --metrics.expensive
       --metrics.influxdb 
+      --metrics.influxdb.database ${INFLUX_DB_NAME}
       --metrics.influxdb.endpoint ${INFLUX_DB_HOST} 
       --metrics.influxdb.username ${INFLUX_USER} 
       --metrics.influxdb.password ${INFLUX_PASS}
@@ -137,6 +142,7 @@ services:
       --metrics
       --metrics.expensive
       --metrics.influxdb 
+      --metrics.influxdb.database ${INFLUX_DB_NAME}
       --metrics.influxdb.endpoint ${INFLUX_DB_HOST} 
       --metrics.influxdb.username ${INFLUX_USER} 
       --metrics.influxdb.password ${INFLUX_PASS}
@@ -157,6 +163,7 @@ services:
       --metrics
       --metrics.expensive
       --metrics.influxdb 
+      --metrics.influxdb.database ${INFLUX_DB_NAME}
       --metrics.influxdb.endpoint ${INFLUX_DB_HOST} 
       --metrics.influxdb.username ${INFLUX_USER} 
       --metrics.influxdb.password ${INFLUX_PASS}

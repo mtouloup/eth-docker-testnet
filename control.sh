@@ -56,7 +56,7 @@ function generate_network_configs()
   container_name='influxdb'
   IS_RUNNING=$(docker ps --format '{{.Names}}' | grep "^${container_name}\$")
   
-  if ( $IS_RUNNING ); then
+  if [ "$IS_RUNNING" ]; then
     # create monitoring database
     dbcmd="docker exec -it influxdb influx -execute 'CREATE DATABASE \"${INFLUX_DB_NAME}\"'"
     eval $dbcmd
