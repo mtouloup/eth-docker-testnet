@@ -52,12 +52,19 @@ function generate_network_configs()
   nvals=$1
   echo "Generating network configuration for $nvals validators..."
   dockercompose_testnet_generator ${VAL_NUM} ${OUTPUT_DIR}
-  # create monitoring database
-  dbcmd="docker exec -it influxdb influx -execute 'CREATE DATABASE \"${INFLUX_DB_NAME}\"'"
-  eval $dbcmd
-  #dbcmd="\'CREATE DATABASE \"${INFLUX_DB_NAME}\";\'"
-  #docker exec -it influxdb influx -execute $dbcmd
-  echo "  done!"
+
+  container_name='influxdb'
+  IS_RUNNING=$(docker ps --format '{{.Names}}' | grep "^${container_name}\$")
+  
+  if [ "$IS_RUNNING" ]; then
+    # create monitoring database
+    dbcmd="docker exec -it influxdb influx -execute 'CREATE DATABASE \"${INFLUX_DB_NAME}\"'"
+    eval $dbcmd
+    echo "done!"
+  else
+    echo 'Monitoring is not running, DB is not generated'
+  fi
+
 }
 
 function start_network()
