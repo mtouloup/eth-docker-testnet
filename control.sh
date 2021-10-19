@@ -8,7 +8,7 @@ WORKING_DIR=${WORKING_DIR:-$(realpath $(dirname $0))}
 TEMPLATES_DIR=${TEMPLATES_DIR:-$(realpath $(dirname $0)/templates/)}
 COMPOSE_FILENAME=${COMPOSE_FILENAME:-"docker-compose-testnet.yaml"}
 OUTPUT_DIR=${OUTPUT_DIR:-$(realpath $(dirname $0)/configfiles)}
-VAL_NAME_PREFIX=${VAL_NAME_PREFIX:-"validator-"}
+VAL_NAME_PREFIX=${VAL_NAME_PREFIX:-"geth-validator-"}
 TESTNET_NAME=${TESTNET_NAME:-"eth_private_testnet"}
 COMPOSE_FILE=${WORKING_DIR}/$COMPOSE_FILENAME
 
