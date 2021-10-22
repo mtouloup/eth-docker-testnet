@@ -30,7 +30,8 @@ USAGE="$(basename $0) is the main control script for the testnet.
 Usage : $(basename $0) <action> <arguments>
 
 Actions:
-  start     --val-num|-n <num of validators>
+  start --val-num|-n <num of validators>
+        --ca|-ca-consensus <consensus algorithm> 
        Starts a network with <num_validators> 
   configure --val-num|-n <num of validators>
        configures a network with <num_validators> 
@@ -50,6 +51,19 @@ function help()
 function generate_network_configs()
 {
   nvals=$1
+  ca=$2
+
+  if [ -z "$ca" ]
+  then
+        ca='pow'
+  fi
+
+  #Configure consensus
+  sed -i "s/genesis.json/genesis_$ca.json/g" Dockerfile 
+  sed -i "s/genesis_pow.json/genesis_$ca.json/g" Dockerfile 
+  sed -i "s/genesis_poa.json/genesis_$ca.json/g" Dockerfile
+
+
   echo "Generating network configuration for $nvals validators..."
   dockercompose_testnet_generator ${VAL_NUM} ${OUTPUT_DIR}
 
@@ -76,7 +90,7 @@ function start_network()
   echo "Starting the testnet..."
   TESTNET_NAME=${TESTNET_NAME} IMAGE_TAG=${IMAGE_TAG}\
     WORKING_DIR=$WORKING_DIR \
-     docker-compose -f ${COMPOSE_FILE} --env-file $ENVFILE up -d
+     docker-compose -f ${COMPOSE_FILE} --env-file $ENVFILE up --build -d
 
   echo "Waiting for everything goes up..."
 
@@ -145,9 +159,16 @@ while [ "$1" != "" ]; do
                VAL_NUM=$1
                ;;
         esac
+
+        case $2 in 
+             -ca|--ca-consensus ) shift
+               CA=$2
+               ;;
+        esac
+
         shift
       done
-      generate_network_configs $VAL_NUM
+      generate_network_configs $VAL_NUM $CA
       exit
       ;;
     "stop" ) shift
