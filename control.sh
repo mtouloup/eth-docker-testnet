@@ -59,9 +59,9 @@ function generate_network_configs()
   fi
 
   #Configure consensus
-  sed -i "s/genesis.json/genesis_$ca.json/g" Dockerfile 
-  sed -i "s/genesis_pow.json/genesis_$ca.json/g" Dockerfile 
-  sed -i "s/genesis_poa.json/genesis_$ca.json/g" Dockerfile
+  sed -i "s/\genesis.json/genesis_$ca.json/g" ${WORKING_DIR}/Dockerfile 
+  sed -i "s/\genesis_pow.json/genesis_$ca.json/g" ${WORKING_DIR}/Dockerfile 
+  sed -i "s/\genesis_poa.json/genesis_$ca.json/g" ${WORKING_DIR}/Dockerfile
 
 
   echo "Generating network configuration for $nvals validators..."
