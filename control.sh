@@ -31,7 +31,6 @@ Usage : $(basename $0) <action> <arguments>
 
 Actions:
   start --val-num|-n <num of validators>
-        --ca|-ca-consensus <consensus algorithm> 
        Starts a network with <num_validators> 
   configure --val-num|-n <num of validators>
        configures a network with <num_validators> 
@@ -51,19 +50,7 @@ function help()
 function generate_network_configs()
 {
   nvals=$1
-  ca=$2
-
-  if [ -z "$ca" ]
-  then
-        ca='pow'
-  fi
-
-  #Configure consensus
-  sed -i "s/\genesis.json/genesis_$ca.json/g" ${WORKING_DIR}/Dockerfile 
-  sed -i "s/\genesis_pow.json/genesis_$ca.json/g" ${WORKING_DIR}/Dockerfile 
-  sed -i "s/\genesis_poa.json/genesis_$ca.json/g" ${WORKING_DIR}/Dockerfile
-
-
+  
   echo "Generating network configuration for $nvals validators..."
   dockercompose_testnet_generator ${VAL_NUM} ${OUTPUT_DIR}
 
@@ -159,16 +146,9 @@ while [ "$1" != "" ]; do
                VAL_NUM=$1
                ;;
         esac
-
-        case $2 in 
-             -ca|--ca-consensus ) shift
-               CA=$2
-               ;;
-        esac
-
         shift
       done
-      generate_network_configs $VAL_NUM $CA
+      generate_network_configs $VAL_NUM
       exit
       ;;
     "stop" ) shift
