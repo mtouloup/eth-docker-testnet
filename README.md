@@ -24,7 +24,6 @@ Usage : control.sh <action> <arguments>
 
 Actions:
   start  --val-num|-n <num of validators>
-         --ca|-ca-consensus <consensus algorithm>
        Starts a network with <num_validators> 
   configure --val-num|-n <num of validators>
        configures a network with <num_validators> 
