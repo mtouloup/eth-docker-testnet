@@ -29,15 +29,6 @@ services:
         --metrics.influxdb.password ${INFLUX_PASS}
       networks:
         - eth_private_testnet
-  eth_explorer:
-      container_name: eth-explorer
-      environment:
-        - APP_NODE_URL=${APP_NODE_URL}
-      image: alethio/ethereum-lite-explorer
-      ports:
-        - "8081:80"
-      networks:
-        - eth_private_testnet
   geth-rpc-endpoint:
     container_name: geth-rpc-endpoint
     env_file:
