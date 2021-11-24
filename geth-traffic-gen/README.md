@@ -4,6 +4,7 @@ The scripts in this repository are responsible to generate traffic, meaning gene
 
 ## Prerequisites
 In order to run the traffic generator you need to have installed Python3, Pip3 and Git on your system.
+Moreover, you need to define the Host IP and Port of the Geth RPC node in the ```config.ini``` file.
 
 ## Run it for the first time
 
